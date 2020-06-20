@@ -9,10 +9,22 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/test")
-public classTestController {
+public class TestController {
 	@GetMapping("/all")
 	public String allAccess() {
 		return "Public Content.";
+	}
+
+	@GetMapping("/user")
+	@PreAuthorize("hasRole('USER') or hasRole('ROLE_AGENT') or hasRole('ADMIN')")
+	public String userAccess() {
+		return "User Content.";
+	}
+
+	@GetMapping("/agent")
+	@PreAuthorize("hasRole('ROLE_AGENT')")
+	public String angentAccess() {
+		return "Only Agents can see this.";
 	}
 
 	@GetMapping("/admin")

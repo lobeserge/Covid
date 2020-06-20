@@ -87,9 +87,9 @@ public class AuthController {
 		}
 
 		// Create new user's account
-		User user = new User(signUpRequest.getUsername(), 
-							 signUpRequest.getEmail(),
-							 encoder.encode(signUpRequest.getPassword()));
+		User user = new User(signUpRequest.getUsername(),
+				signUpRequest.getEmail(),
+				encoder.encode(signUpRequest.getPassword()),signUpRequest.getNationalid());
 
 		Set<String> strRoles = signUpRequest.getRole();
 		Set<Role> roles = new HashSet<>();
@@ -101,15 +101,22 @@ public class AuthController {
 		} else {
 			strRoles.forEach(role -> {
 				switch (role) {
-				case "admin":
-					Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(adminRole);
-					break;
-				default:
-					Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-							.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-					roles.add(userRole);
+					case "admin":
+						Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
+								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						roles.add(adminRole);
+
+						break;
+					case "agent":
+						Role modRole = roleRepository.findByName(ERole.ROLE_AGENT)
+								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						roles.add(modRole);
+
+						break;
+					default:
+						Role userRole = roleRepository.findByName(ERole.ROLE_USER)
+								.orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+						roles.add(userRole);
 				}
 			});
 		}
@@ -117,6 +124,6 @@ public class AuthController {
 		user.setRoles(roles);
 		userRepository.save(user);
 
-		return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+		return ResponseEntity.ok(user);
 	}
 }

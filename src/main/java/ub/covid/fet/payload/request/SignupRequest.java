@@ -13,6 +13,10 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
+
+    @NotBlank
+    @Size(max = 20)
+    private String nationalid;
     
     private Set<String> role;
     
@@ -27,7 +31,15 @@ public class SignupRequest {
     public void setUsername(String username) {
         this.username = username;
     }
- 
+
+    public String getNationalid() {
+        return nationalid;
+    }
+
+    public void setNationalid(String nationalid) {
+        this.nationalid = nationalid;
+    }
+
     public String getEmail() {
         return email;
     }

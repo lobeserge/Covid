@@ -23,6 +23,10 @@ public class User {
 	private String username;
 
 	@NotBlank
+	@Size(max = 20)
+	private String nationalid;
+
+	@NotBlank
 	@Size(max = 50)
 	@Email
 	private String email;
@@ -30,6 +34,16 @@ public class User {
 	@NotBlank
 	@Size(max = 120)
 	private String password;
+
+	@OneToOne(fetch = FetchType.LAZY,
+			cascade =  CascadeType.ALL,
+			mappedBy = "user")
+	private UserLocation userLocation;
+
+	@OneToOne(fetch = FetchType.LAZY,
+			cascade =  CascadeType.ALL,
+			mappedBy = "user")
+	private MedicalRecord medicalRecord;
 
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(	name = "user_roles", 
@@ -39,11 +53,24 @@ public class User {
 
 	public User() {
 	}
+	public User(long id) {
+		this.id=id;
+	}
 
-	public User(String username, String email, String password) {
+
+	public User(String username, String email, String password,String nationalid) {
 		this.username = username;
 		this.email = email;
 		this.password = password;
+		this.nationalid = nationalid;
+	}
+
+	public String getNationalid() {
+		return nationalid;
+	}
+
+	public void setNationalid(String nationalid) {
+		this.nationalid = nationalid;
 	}
 
 	public Long getId() {
