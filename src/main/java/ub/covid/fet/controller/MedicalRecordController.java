@@ -19,8 +19,8 @@ public class MedicalRecordController {
     MedicalRecordService medicalRecordService;
 
     @PostMapping("/medical/add")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody MedicalRecordDTO medicalRecordDTO ) {
+    public ResponseEntity<?> addMedicalRecord(@Valid @RequestBody MedicalRecordDTO medicalRecordDTO ) {
         medicalRecordService.addMedicalRecord(medicalRecordDTO);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity("Medical Record successfully added",HttpStatus.CREATED);
     }
 }

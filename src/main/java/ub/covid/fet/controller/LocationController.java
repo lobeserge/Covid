@@ -22,8 +22,8 @@ public class LocationController {
     UserLocationService userLocationService;
 
     @PostMapping("/location/add")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LocationDTO locationDTO) {
+    public ResponseEntity<?> addLocation(@Valid @RequestBody LocationDTO locationDTO) {
         userLocationService.addUserLocation(locationDTO);
-        return new ResponseEntity(HttpStatus.CREATED);
+        return new ResponseEntity("User location successfully added",HttpStatus.CREATED);
     }
 }
