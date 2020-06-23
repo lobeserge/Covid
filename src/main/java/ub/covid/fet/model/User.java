@@ -8,7 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 @Entity
-@Table(	name = "users",
+@Table(	name = "user_details",
 		uniqueConstraints = {
 			@UniqueConstraint(columnNames = "username"),
 			@UniqueConstraint(columnNames = "email")
